@@ -1,4 +1,5 @@
-"use client";
+"use cliimport { db } from "@/lib/firebase";
+import { collection, addDoc } from "firebase/firestore";ent";
 
 import { useState } from "react";
 import CarSelector from "../components/CarSelector";
@@ -10,7 +11,15 @@ export default function Booking() {
   const [distance, setDistance] = useState(10);
 
   const price = car ? car.price * distance : 0;
-
+await addDoc(collection(db, "bookings"), {
+  name,
+  phone,
+  car: car?.name || "",
+  distance,
+  price,
+  status: "pending",
+  createdAt: new Date().toISOString(),
+});
   const sendWhatsApp = () => {
     const message = `
 🚖 Safari Limo Booking
